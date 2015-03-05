@@ -1,0 +1,20 @@
+{
+  "name": "korin-train-for-raspberry-pi",
+  "version": "0.0.1",
+  "description": "KorinTrain for Raspberry Pi",
+  "main": "korin-train.coffee",
+  "scripts": {
+    "start": "./node_modules/coffee-script/bin/coffee korin-train.coffee"
+  },
+  "keywords": [
+    "linda"
+  ],
+  "author": "Naoaki Yamada <napo0703@gmail.com>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "coffee-script": "~1.7.1",
+    "linda": "~>1.1",
+    "lodash": "^2.4.1",
+    "socket.io-client": "~>1.0"
+  }
+}
