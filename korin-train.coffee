@@ -26,7 +26,7 @@ linda.io.on 'connect', ->
   ts.watch {type: 'move', cmd: 'right'}, (err, tuple) ->
     return console.error err if err
     return if tuple.data.response?
-    return if last_at + 2000 > Date.now()  # 5sec interval
+    return if last_at + 500 > Date.now()
     last_at = Date.now()
     console.log tuple
     fs.writeFileSync path.join(gpio2, 'value'), 1
@@ -35,7 +35,7 @@ linda.io.on 'connect', ->
   ts.watch {type: 'move', cmd: 'left'}, (err, tuple) ->
     return console.error err if err
     return if tuple.data.response?
-    return if last_at + 2000 > Date.now()  # 5sec interval
+    return if last_at + 500 > Date.now()
     last_at = Date.now()
     console.log tuple
     fs.writeFileSync path.join(gpio2, 'value'), 0
@@ -44,7 +44,7 @@ linda.io.on 'connect', ->
   ts.watch {type: 'move', cmd: 'stop'}, (err, tuple) ->
     return console.error err if err
     return if tuple.data.response?
-    return if last_at + 2000 > Date.now()  # 5sec interval
+    return if last_at + 500 > Date.now()
     last_at = Date.now()
     console.log tuple
     fs.writeFileSync path.join(gpio2, 'value'), 0
