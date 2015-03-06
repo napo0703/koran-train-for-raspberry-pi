@@ -1,9 +1,14 @@
 fs = require 'fs'
+path = require 'path'
 
-fs.writeFileSync '/sys/class/gpio/export', 2
-fs.writeFileSync '/sys/class/gpio/export', 3
-fs.writeFileSync '/sys/class/gpio/export', 'out'
-fs.writeFileSync '/sys/class/gpio/export', 'out'
+dir = '/sys/class/gpio/'
+gpio2 = path.join dir, 'gpio' + 2
+gpio3 = path.join dir, 'gpio' + 3
+
+#fs.writeFileSync path.join(dir, 'export'), 2
+#fs.writeFileSync path.join(dir, 'export'), 3
+fs.writeFileSync path.join(gpio2, 'direction'), 'out'
+fs.writeFileSync path.join(gpio3, 'direction'), 'out'
 
 process.env.LINDA_BASE  ||= 'http://linda-server.herokuapp.com'
 process.env.LINDA_SPACE ||= 'delta'
@@ -24,8 +29,8 @@ linda.io.on 'connect', ->
     return if last_at + 2000 > Date.now()  # 5sec interval
     last_at = Date.now()
     console.log tuple
-    fs.writeFileSync '/sys/class/gpio/gpio2/value', 1
-    fs.writeFileSync '/sys/class/gpio/gpio3/value', 0
+    fs.writeFileSync path.join(gpio2, 'value'), 1
+    fs.writeFileSync path.join(gpio3, 'value'), 0
 
   ts.watch {type: 'move', cmd: 'left'}, (err, tuple) ->
     return console.error err if err
@@ -33,8 +38,8 @@ linda.io.on 'connect', ->
     return if last_at + 2000 > Date.now()  # 5sec interval
     last_at = Date.now()
     console.log tuple
-    fs.writeFileSync '/sys/class/gpio/gpio2/value', 1
-    fs.writeFileSync '/sys/class/gpio/gpio3/value', 0
+    fs.writeFileSync path.join(gpio2, 'value'), 0
+    fs.writeFileSync path.join(gpio3, 'value'), 1
 
   ts.watch {type: 'move', cmd: 'stop'}, (err, tuple) ->
     return console.error err if err
@@ -42,8 +47,8 @@ linda.io.on 'connect', ->
     return if last_at + 2000 > Date.now()  # 5sec interval
     last_at = Date.now()
     console.log tuple
-    fs.writeFileSync '/sys/class/gpio/gpio2/value', 1
-    fs.writeFileSync '/sys/class/gpio/gpio3/value', 0
+    fs.writeFileSync path.join(gpio2, 'value'), 0
+    fs.writeFileSync path.join(gpio3, 'value'), 0
 
 linda.io.on 'disconnect', ->
   console.log "socket.io disconnect.."
